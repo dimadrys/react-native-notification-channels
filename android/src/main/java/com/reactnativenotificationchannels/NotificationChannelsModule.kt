@@ -12,7 +12,7 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
   private val notificationManager: NotificationManager = reactContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
   override fun getName(): String {
-      return "NotificationChannels"
+    return "NotificationChannels"
   }
 
   @ReactMethod
@@ -60,7 +60,7 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     promise.resolve("Channel Deleted")
   }
 
-  private fun checkOrCreateChannel(channel_id: String?, channel_name: String?, channel_description: String?, importance: Int, vibratePattern: Any?): Boolean {
+  private fun checkOrCreateChannel(channel_id: String?, channel_name: String?, channel_description: String?, importance: Int, vibratePattern: LongArray?): Boolean {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
       return false
     }
@@ -74,9 +74,9 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
       channel = NotificationChannel(channel_id, channel_name, importance)
       channel.description = channel_description
 
-      channel.enableLights(true);
-      channel.enableVibration(vibratePattern != null);
-      channel.setVibrationPattern(vibratePattern);
+      channel.enableLights(true)
+      channel.enableVibration(vibratePattern != null)
+      channel.setVibrationPattern(vibratePattern)
 
 //            if (soundUri != null) {
 //                AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -102,8 +102,8 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     //        boolean playSound = !channelInfo.hasKey("playSound") || channelInfo.getBoolean("playSound");
 //        String soundName = channelInfo.hasKey("soundName") ? channelInfo.getString("soundName") : "default";
     val importance = if (channelInfo.hasKey("importance")) channelInfo.getInt("importance") else 4
-    val vibrate = channelInfo.hasKey("vibrate") && channelInfo.getBoolean("vibrate");
-    val vibratePattern = vibrate ? new long[] { 0, 500, 1000 } : null;
+    val vibrate = channelInfo.hasKey("vibrate") && channelInfo.getBoolean("vibrate")
+    val vibratePattern = if (vibrate) longArrayOf(0, 500, 1000) else null
 //        Uri soundUri = playSound ? getSoundUri(soundName) : null;
     promise.resolve(checkOrCreateChannel(channelId, channelName, channelDescription, importance, vibratePattern))
   }
