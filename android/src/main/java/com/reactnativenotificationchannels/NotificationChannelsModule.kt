@@ -102,8 +102,8 @@ class NotificationChannelsModule(reactContext: ReactApplicationContext) : ReactC
     //        boolean playSound = !channelInfo.hasKey("playSound") || channelInfo.getBoolean("playSound");
 //        String soundName = channelInfo.hasKey("soundName") ? channelInfo.getString("soundName") : "default";
     val importance = if (channelInfo.hasKey("importance")) channelInfo.getInt("importance") else 4
-        boolean vibrate = channelInfo.hasKey("vibrate") && channelInfo.getBoolean("vibrate");
-        long[] vibratePattern = vibrate ? new long[] { 0, 500, 1000 } : null;
+    val vibrate = channelInfo.hasKey("vibrate") && channelInfo.getBoolean("vibrate");
+    val vibratePattern = vibrate ? new long[] { 0, 500, 1000 } : null;
 //        Uri soundUri = playSound ? getSoundUri(soundName) : null;
     promise.resolve(checkOrCreateChannel(channelId, channelName, channelDescription, importance, vibratePattern))
   }
