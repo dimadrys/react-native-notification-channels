@@ -12,6 +12,7 @@ type ChannelInfoType = {
   channelName: string;
   channelDescription: string;
   importance: CHANNEL_IMPORTANCE;
+  vibrate: boolean;
 };
 
 type NotificationChannelsType = {
